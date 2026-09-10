@@ -1,5 +1,137 @@
 const mobile = window.matchMedia("(max-width: 720px)");
 
+// Carrusel de portada (solo móvil). Cada diapositiva se coloca por su
+// distancia a la activa en vez de mover una tira: así el salto de la última
+// a la primera ocurre fuera de pantalla y el bucle no da tirones.
+const HERO_PHOTOS = [
+  "assets/hero.webp",
+  "assets/rooms/piscina/1.webp",
+  "assets/rooms/salon-1/1.webp",
+  "assets/rooms/habitacion-1/1.webp",
+  "assets/rooms/jardin/2.webp",
+];
+
+const HERO_INTERVAL = 4000;
+
+const heroEl = document.querySelector(".hero");
+const stillMotion = matchMedia("(prefers-reduced-motion: reduce)");
+let carousel = null;
+
+const buildCarousel = () => {
+  if (carousel || !heroEl) return;
+
+  const container = document.createElement("div");
+  container.className = "hero-carousel";
+
+  const slides = HERO_PHOTOS.map((src, i) => {
+    const slide = document.createElement("div");
+    slide.className = "hero-slide";
+    const img = document.createElement("img");
+    img.src = src;
+    img.alt = "";
+    img.loading = i === 0 ? "eager" : "lazy";
+    // Sin esto el arrastre nativo de imágenes secuestra el gesto y el
+    // navegador dispara pointercancel antes de que llegue el pointerup.
+    img.draggable = false;
+    slide.appendChild(img);
+    container.appendChild(slide);
+    return slide;
+  });
+
+  heroEl.prepend(container);
+  heroEl.classList.add("has-carousel");
+
+  const n = slides.length;
+  let active = 0;
+  let timer = null;
+
+  const layout = () => {
+    slides.forEach((slide, i) => {
+      let offset = i - active;
+      if (offset > n / 2) offset -= n;
+      if (offset < -n / 2) offset += n;
+
+      const near = Math.abs(offset) <= 1;
+      slide.style.transform =
+        `translateX(calc(-50% + ${offset} * (100% + 12px))) scale(${offset === 0 ? 1 : 0.88})`;
+      slide.style.opacity = near ? (offset === 0 ? 1 : 0.85) : 0;
+      slide.style.zIndex = String(3 - Math.abs(offset));
+    });
+  };
+
+  const go = (delta) => {
+    active = (active + delta + n) % n;
+    layout();
+  };
+
+  const start = () => {
+    if (stillMotion.matches) return;
+    stop();
+    timer = setInterval(() => go(1), HERO_INTERVAL);
+  };
+
+  const stop = () => {
+    if (timer) clearInterval(timer);
+    timer = null;
+  };
+
+  // Deslizar: el paso automático se detiene mientras el dedo está encima.
+  let startX = null;
+  container.addEventListener("pointerdown", (event) => {
+    startX = event.clientX;
+    // Capturar el puntero garantiza que el pointerup vuelva aquí aunque
+    // el dedo termine sobre otra diapositiva.
+    container.setPointerCapture(event.pointerId);
+    stop();
+  });
+
+  const endSwipe = (event) => {
+    if (startX !== null) {
+      const dx = event.clientX - startX;
+      if (Math.abs(dx) > 40) go(dx < 0 ? 1 : -1);
+    }
+    startX = null;
+    start();
+  };
+
+  container.addEventListener("pointerup", endSwipe);
+  container.addEventListener("pointercancel", endSwipe);
+
+  layout();
+  start();
+  carousel = { container, start, stop };
+};
+
+const destroyCarousel = () => {
+  if (!carousel) return;
+  carousel.stop();
+  carousel.container.remove();
+  heroEl.classList.remove("has-carousel");
+  carousel = null;
+};
+
+const syncCarousel = () => (mobile.matches ? buildCarousel() : destroyCarousel());
+
+syncCarousel();
+mobile.addEventListener("change", syncCarousel);
+
+// Los datos del alojamiento viven en la portada en móvil y junto al párrafo
+// de "Descubre la casa" en desktop. Se mueve el mismo nodo en vez de
+// duplicar el markup, para no tener dos textos que mantener en sincronía.
+const heroMeta = document.querySelector(".hero-meta");
+const heroContent = document.querySelector(".hero-content");
+const discoverMeta = document.getElementById("discoverMeta");
+
+if (heroMeta && discoverMeta) {
+  const placeMeta = () => {
+    const target = mobile.matches ? heroContent : discoverMeta;
+    if (heroMeta.parentNode !== target) target.appendChild(heroMeta);
+  };
+
+  placeMeta();
+  mobile.addEventListener("change", placeMeta);
+}
+
 // Menú móvil a pantalla completa
 const navToggle = document.getElementById("navToggle");
 const navToggleIcon = document.getElementById("navToggleIcon");
