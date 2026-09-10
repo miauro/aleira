@@ -1,12 +1,30 @@
 const mobile = window.matchMedia("(max-width: 720px)");
 
-// Menú móvil
+// Menú móvil a pantalla completa
 const navToggle = document.getElementById("navToggle");
+const navToggleIcon = document.getElementById("navToggleIcon");
 const navLinks = document.getElementById("navLinks");
+
+const setMenu = (open) => {
+  navLinks.classList.toggle("open", open);
+  navToggle.setAttribute("aria-expanded", String(open));
+  navToggleIcon.className = open ? "ph ph-x" : "ph ph-list";
+  document.body.style.overflow = open ? "hidden" : "";
+  document.getElementById("floatingCta").classList.toggle("visible", !open);
+};
 
 if (navToggle && navLinks) {
   navToggle.addEventListener("click", () => {
-    navLinks.classList.toggle("open");
+    setMenu(!navLinks.classList.contains("open"));
+  });
+
+  // Al elegir un destino el menú se cierra y te deja verlo.
+  navLinks.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => setMenu(false));
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && navLinks.classList.contains("open")) setMenu(false);
   });
 }
 
@@ -95,12 +113,13 @@ if (lightbox) {
 
   const photos = [];
   document.querySelectorAll(".room-grid").forEach((grid) => {
-    const name = grid.closest(".room").querySelector("h3").textContent;
+    // Se guarda el elemento, no su texto: así el rótulo sigue al idioma activo.
+    const heading = grid.closest(".room").querySelector("h3");
     const images = Array.from(grid.querySelectorAll("img"));
     const base = photos.length;
     images.forEach((img, i) => {
       img.addEventListener("click", () => open(base + i));
-      photos.push({ src: img.src, alt: img.alt, room: name, position: i + 1, total: images.length });
+      photos.push({ img, heading, position: i + 1, total: images.length });
     });
   });
 
@@ -108,9 +127,9 @@ if (lightbox) {
 
   const render = () => {
     const photo = photos[index];
-    lightboxImg.src = photo.src;
-    lightboxImg.alt = photo.alt;
-    lightboxRoom.textContent = photo.room;
+    lightboxImg.src = photo.img.src;
+    lightboxImg.alt = photo.img.alt;
+    lightboxRoom.textContent = photo.heading.textContent;
     lightboxCount.textContent = `${photo.position} / ${photo.total}`;
   };
 
@@ -149,25 +168,113 @@ if (lightbox) {
   });
 }
 
-// CTA flotante: aparece al pasar el hero, se esconde con el lightbox abierto
+// CTA flotante: visible desde el inicio, salvo con el lightbox o el menú abiertos
 const floatingCta = document.getElementById("floatingCta");
-const hero = document.querySelector(".hero");
 
-if (floatingCta && hero) {
-  let heroPassed = false;
-
+if (floatingCta) {
   const update = () => {
-    const hidden = !heroPassed || document.getElementById("lightbox").classList.contains("open");
-    floatingCta.classList.toggle("visible", !hidden);
+    const blocked =
+      document.getElementById("lightbox").classList.contains("open") ||
+      navLinks.classList.contains("open");
+    floatingCta.classList.toggle("visible", !blocked);
   };
 
-  new IntersectionObserver(
-    ([entry]) => {
-      heroPassed = !entry.isIntersecting && entry.boundingClientRect.top < 0;
-      update();
-    },
-    { threshold: 0 }
-  ).observe(hero);
-
   floatingCta.addEventListener("recheck", update);
+  update();
+}
+
+// Entrada progresiva de las secciones al aparecer en pantalla
+const revealTargets = document.querySelectorAll(
+  ".section-title, .discover-intro, .section-intro, .room, .service-group"
+);
+
+if (revealTargets.length && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  revealTargets.forEach((el) => el.classList.add("reveal"));
+
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("in");
+        revealObserver.unobserve(entry.target);
+      });
+    },
+    { rootMargin: "0px 0px -8% 0px", threshold: 0.05 }
+  );
+
+  revealTargets.forEach((el) => revealObserver.observe(el));
+}
+
+// Idioma: por defecto el del navegador (español -> ES, resto -> EN)
+const langToggle = document.getElementById("langToggle");
+
+if (langToggle && typeof TRANSLATIONS !== "undefined") {
+  const SKIP = new Set(["SCRIPT", "STYLE", "NOSCRIPT"]);
+  const texts = [];
+  const attrs = [];
+
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+    acceptNode: (node) =>
+      !SKIP.has(node.parentNode.nodeName) && node.nodeValue.trim()
+        ? NodeFilter.FILTER_ACCEPT
+        : NodeFilter.FILTER_REJECT,
+  });
+
+  for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+    const raw = node.nodeValue;
+    const es = raw.trim();
+    if (!TRANSLATIONS[es]) continue;
+    const start = raw.indexOf(es);
+    texts.push({ node, es, prefix: raw.slice(0, start), suffix: raw.slice(start + es.length) });
+  }
+
+  document.querySelectorAll("[alt], [aria-label]").forEach((el) => {
+    ["alt", "aria-label"].forEach((name) => {
+      const es = el.getAttribute(name);
+      if (es) attrs.push({ el, name, es });
+    });
+  });
+
+  const description = document.querySelector('meta[name="description"]');
+  const originalTitle = document.title;
+
+  // Los alt siguen el patrón "<espacio> de A Leira": se traducen por regla
+  // en vez de meter las 38 cadenas en el diccionario.
+  const translateAttr = (value) => {
+    if (TRANSLATIONS[value]) return TRANSLATIONS[value];
+    const room = value.match(/^(.*) de A Leira$/);
+    if (room && TRANSLATIONS[room[1]]) return `${TRANSLATIONS[room[1]]} at A Leira`;
+    return value;
+  };
+
+  const setLanguage = (lang) => {
+    const en = lang === "en";
+    texts.forEach(({ node, es, prefix, suffix }) => {
+      node.nodeValue = prefix + (en ? TRANSLATIONS[es] : es) + suffix;
+    });
+    attrs.forEach(({ el, name, es }) => {
+      el.setAttribute(name, en ? translateAttr(es) : es);
+    });
+
+    document.documentElement.lang = lang;
+    document.title = en ? TRANSLATIONS[originalTitle] || originalTitle : originalTitle;
+    if (description) {
+      const es = description.dataset.es || description.content;
+      description.dataset.es = es;
+      description.content = en ? TRANSLATIONS[es] || es : es;
+    }
+
+    // El botón es solo un icono: el idioma de destino va en aria-label
+    // (lectores de pantalla) y en title (tooltip para quien ve).
+    const label = en ? "Cambiar a español" : "Switch to English";
+    langToggle.setAttribute("aria-label", label);
+    langToggle.setAttribute("title", label);
+    langToggle.dataset.lang = lang;
+  };
+
+  setLanguage(navigator.language.toLowerCase().startsWith("es") ? "es" : "en");
+
+  langToggle.addEventListener("click", () => {
+    setLanguage(langToggle.dataset.lang === "es" ? "en" : "es");
+  });
 }

@@ -7,14 +7,17 @@
 <meta name="description" content="A Leira es un alojamiento completo en Becerril de la Sierra (Madrid) con piscina, jardín y capacidad para 10 viajeros. Descubre la casa espacio por espacio.">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="preload" href="assets/fonts/Supreme-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<script>document.documentElement.classList.add("js");</script>
 <script src="https://unpkg.com/@phosphor-icons/web"></script>
 <link rel="stylesheet" href="css/style.css">
 <noscript><style>
   /* Sin JS los acordeones no se pueden abrir: se dejan desplegados. */
   @media (max-width: 720px) {
-    .room-panel, .service-group ul { display: block !important; }
+    .room, .service-group { grid-template-rows: auto auto !important; }
+    .room-panel, .service-group ul { visibility: visible !important; }
     .room-toggle, .service-toggle-icon { display: none !important; }
     .room-header h3 { display: block !important; }
+    .service-group h3 { border-bottom: 1px solid var(--color-border) !important; }
   }
 </style></noscript>
 </head>
@@ -35,12 +38,14 @@
     </a>
 
     <div class="nav-cta">
+      <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch to English">
+        <i class="ph ph-translate" aria-hidden="true"></i>
+      </button>
       <a href="#" class="btn-reserve">Reservar <i class="ph ph-arrow-right"></i></a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">
+        <i class="ph ph-list" id="navToggleIcon"></i>
+      </button>
     </div>
-
-    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">
-      <i class="ph ph-list"></i>
-    </button>
   </nav>
 </header>
 
@@ -530,6 +535,7 @@
   <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Foto siguiente"><i class="ph ph-caret-right"></i></button>
 </div>
 
+<script src="js/i18n.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>
