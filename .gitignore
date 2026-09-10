@@ -1,0 +1,14 @@
+# Fotos originales de cámara (~45 MB). Las versiones optimizadas que usa
+# el sitio están en assets/rooms/. Se quedan solo en local.
+Resources/
+
+# Paquete completo de la fuente (OTF, TTF y todos los pesos estáticos).
+# El sitio solo carga las variables de assets/fonts/.
+assets/Supreme_Complete/
+
+# Ajustes locales de Claude Code
+.claude/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db

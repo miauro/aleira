@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Leira · Alojamiento completo en Becerril de la Sierra</title>
+<meta name="description" content="A Leira es un alojamiento completo en Becerril de la Sierra (Madrid) con piscina, jardín y capacidad para 10 viajeros. Descubre la casa espacio por espacio.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preload" href="assets/fonts/Supreme-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<script src="https://unpkg.com/@phosphor-icons/web"></script>
+<link rel="stylesheet" href="css/style.css">
+<noscript><style>
+  /* Sin JS los acordeones no se pueden abrir: se dejan desplegados. */
+  @media (max-width: 720px) {
+    .room-panel, .service-group ul { display: block !important; }
+    .room-toggle, .service-toggle-icon { display: none !important; }
+    .room-header h3 { display: block !important; }
+  }
+</style></noscript>
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="nav container">
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html" class="active">Inicio</a></li>
+      <li><a href="#descubre">La casa</a></li>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#">La zona</a></li>
+      <li class="nav-mobile-cta"><a href="#" class="btn-reserve">Reservar <i class="ph ph-arrow-right"></i></a></li>
+    </ul>
+
+    <a href="index.html" class="logo">
+      <img src="assets/logo.svg" alt="A Leira">
+    </a>
+
+    <div class="nav-cta">
+      <a href="#" class="btn-reserve">Reservar <i class="ph ph-arrow-right"></i></a>
+    </div>
+
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú">
+      <i class="ph ph-list"></i>
+    </button>
+  </nav>
+</header>
+
+<section class="hero-section container">
+  <div class="hero">
+    <img src="assets/hero.webp" alt="Vista exterior de A Leira con la Sierra de Guadarrama al fondo">
+    <div class="hero-content">
+      <h1>Alojamiento completo en Becerril de la Sierra</h1>
+      <div class="hero-meta">
+        <div><i class="ph ph-users"></i> 10 viajeros</div>
+        <div><i class="ph ph-door"></i> 4 dormitorios</div>
+        <div><i class="ph ph-bed"></i> 7 camas</div>
+        <div><i class="ph ph-bathtub"></i> 2,5 baños</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="discover container" id="descubre">
+  <h2 class="section-title">Descubre la casa</h2>
+  <p class="discover-intro">A Leira es un espacio con capacidad para hasta diez huéspedes, ideal para familias grandes, grupos de amigos o escapadas en pareja que buscan una experiencia única. La casa cuenta con amplios espacios interiores, incluyendo dos salas de estar, dos cocinas y cuatro cómodas habitaciones para un descanso reparador después de un día explorando los alrededores. El verdadero tesoro de esta propiedad es su extenso terreno, donde podrás disfrutar de momentos de tranquilidad al aire libre.</p>
+
+  <div class="discover-layout">
+    <nav class="discover-nav" id="discoverNav">
+      <a href="#salon-1"><span class="arrow"><i class="ph ph-arrow-right"></i></span> Salón 1</a>
+      <a href="#salon-2"><span class="arrow"><i class="ph ph-arrow-right"></i></span> Salón 2</a>
+      <a href="#cocina-completa"><span class="arrow"><i class="ph ph-arrow-right"></i></span> Cocina completa</a>
+      <a href="#cocinita"><span class="arrow"><i class="ph ph-arrow-right"></i></span> Cocinita</a>
+      <a href="#habitacion-1"><span class="arrow"><i class="ph ph-arrow-right"></i></span> Habitación 1</a>
+      <a href="#habitacion-2"><span class="arrow"><i class="ph ph-arrow-right"></i></span> Habitación 2</a>
+      <a href="#habitacion-3"><span class="arrow"><i class="ph ph-arrow-right"></i></span> Habitación 3</a>
+      <a href="#habitacion-4"><span class="arrow"><i class="ph ph-arrow-right"></i></span> Habitación 4</a>
+      <a href="#bano-1"><span class="arrow"><i class="ph ph-arrow-right"></i></span> Baño 1</a>
+      <a href="#bano-2"><span class="arrow"><i class="ph ph-arrow-right"></i></span> Baño 2</a>
+      <a href="#bano-3"><span class="arrow"><i class="ph ph-arrow-right"></i></span> Baño 3</a>
+      <a href="#galeria"><span class="arrow"><i class="ph ph-arrow-right"></i></span> Galería</a>
+      <a href="#jardin"><span class="arrow"><i class="ph ph-arrow-right"></i></span> Jardín</a>
+      <a href="#piscina"><span class="arrow"><i class="ph ph-arrow-right"></i></span> Piscina</a>
+    </nav>
+
+    <div class="discover-content">
+
+      <div class="room" id="salon-1">
+        <button class="room-toggle" type="button" aria-expanded="true" aria-controls="salon-1-panel">
+          <img class="room-thumb" src="assets/rooms/salon-1/1.webp" alt="" loading="lazy">
+          <span class="room-toggle-name">Salón 1</span>
+          <i class="ph ph-plus room-toggle-icon" aria-hidden="true"></i>
+        </button>
+        <div class="room-panel" id="salon-1-panel">
+          <div class="room-header">
+            <h3>Salón 1</h3>
+            <div class="room-tags">
+              <span>Televisión</span>
+              <span>Mesa comedor</span>
+            </div>
+          </div>
+          <div class="room-grid">
+            <img src="assets/rooms/salon-1/1.webp" alt="Salón 1 de A Leira" loading="lazy">
+            <img src="assets/rooms/salon-1/2.webp" alt="Salón 1 de A Leira" loading="lazy">
+            <img src="assets/rooms/salon-1/3.webp" alt="Salón 1 de A Leira" loading="lazy">
+            <img src="assets/rooms/salon-1/4.webp" alt="Salón 1 de A Leira" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <div class="room" id="salon-2">
+        <button class="room-toggle" type="button" aria-expanded="true" aria-controls="salon-2-panel">
+          <img class="room-thumb" src="assets/rooms/salon-2/1.webp" alt="" loading="lazy">
+          <span class="room-toggle-name">Salón 2</span>
+          <i class="ph ph-plus room-toggle-icon" aria-hidden="true"></i>
+        </button>
+        <div class="room-panel" id="salon-2-panel">
+          <div class="room-header">
+            <h3>Salón 2</h3>
+            <div class="room-tags">
+              <span>Televisión</span>
+              <span>Sofá-cama doble</span>
+            </div>
+          </div>
+          <div class="room-grid">
+            <img src="assets/rooms/salon-2/1.webp" alt="Salón 2 de A Leira" loading="lazy">
+            <img src="assets/rooms/salon-2/2.webp" alt="Salón 2 de A Leira" loading="lazy">
+            <img src="assets/rooms/salon-2/3.webp" alt="Salón 2 de A Leira" loading="lazy">
+            <img src="assets/rooms/salon-2/4.webp" alt="Salón 2 de A Leira" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <div class="room" id="cocina-completa">
+        <button class="room-toggle" type="button" aria-expanded="true" aria-controls="cocina-completa-panel">
+          <img class="room-thumb" src="assets/rooms/cocina-completa/1.webp" alt="" loading="lazy">
+          <span class="room-toggle-name">Cocina completa</span>
+          <i class="ph ph-plus room-toggle-icon" aria-hidden="true"></i>
+        </button>
+        <div class="room-panel" id="cocina-completa-panel">
+          <div class="room-header">
+            <h3>Cocina completa</h3>
+          </div>
+          <div class="room-grid">
+            <img src="assets/rooms/cocina-completa/1.webp" alt="Cocina completa de A Leira" loading="lazy">
+            <img src="assets/rooms/cocina-completa/2.webp" alt="Cocina completa de A Leira" loading="lazy">
+            <img src="assets/rooms/cocina-completa/3.webp" alt="Cocina completa de A Leira" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <div class="room" id="cocinita">
+        <button class="room-toggle" type="button" aria-expanded="true" aria-controls="cocinita-panel">
+          <img class="room-thumb" src="assets/rooms/cocinita/1.webp" alt="" loading="lazy">
+          <span class="room-toggle-name">Cocinita</span>
+          <i class="ph ph-plus room-toggle-icon" aria-hidden="true"></i>
+        </button>
+        <div class="room-panel" id="cocinita-panel">
+          <div class="room-header">
+            <h3>Cocinita</h3>
+          </div>
+          <div class="room-grid">
+            <img src="assets/rooms/cocinita/1.webp" alt="Cocinita de A Leira" loading="lazy">
+            <img src="assets/rooms/cocinita/2.webp" alt="Cocinita de A Leira" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <div class="room" id="habitacion-1">
+        <button class="room-toggle" type="button" aria-expanded="true" aria-controls="habitacion-1-panel">
+          <img class="room-thumb" src="assets/rooms/habitacion-1/1.webp" alt="" loading="lazy">
+          <span class="room-toggle-name">Habitación 1</span>
+          <i class="ph ph-plus room-toggle-icon" aria-hidden="true"></i>
+        </button>
+        <div class="room-panel" id="habitacion-1-panel">
+          <div class="room-header">
+            <h3>Habitación 1</h3>
+            <div class="room-tags">
+              <span>Cama de matrimonio</span>
+            </div>
+          </div>
+          <div class="room-grid">
+            <img src="assets/rooms/habitacion-1/1.webp" alt="Habitación 1 de A Leira" loading="lazy">
+            <img src="assets/rooms/habitacion-1/2.webp" alt="Habitación 1 de A Leira" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <div class="room" id="habitacion-2">
+        <button class="room-toggle" type="button" aria-expanded="true" aria-controls="habitacion-2-panel">
+          <img class="room-thumb" src="assets/rooms/habitacion-2/1.webp" alt="" loading="lazy">
+          <span class="room-toggle-name">Habitación 2</span>
+          <i class="ph ph-plus room-toggle-icon" aria-hidden="true"></i>
+        </button>
+        <div class="room-panel" id="habitacion-2-panel">
+          <div class="room-header">
+            <h3>Habitación 2</h3>
+            <div class="room-tags">
+              <span>2 camas individuales</span>
+            </div>
+          </div>
+          <div class="room-grid">
+            <img src="assets/rooms/habitacion-2/1.webp" alt="Habitación 2 de A Leira" loading="lazy">
+            <img src="assets/rooms/habitacion-2/2.webp" alt="Habitación 2 de A Leira" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <div class="room" id="habitacion-3">
+        <button class="room-toggle" type="button" aria-expanded="true" aria-controls="habitacion-3-panel">
+          <img class="room-thumb" src="assets/rooms/habitacion-3/1.webp" alt="" loading="lazy">
+          <span class="room-toggle-name">Habitación 3</span>
+          <i class="ph ph-plus room-toggle-icon" aria-hidden="true"></i>
+        </button>
+        <div class="room-panel" id="habitacion-3-panel">
+          <div class="room-header">
+            <h3>Habitación 3</h3>
+            <div class="room-tags">
+              <span>Litera</span>
+            </div>
+          </div>
+          <div class="room-grid">
+            <img src="assets/rooms/habitacion-3/1.webp" alt="Habitación 3 de A Leira" loading="lazy">
+            <img src="assets/rooms/habitacion-3/2.webp" alt="Habitación 3 de A Leira" loading="lazy">
+            <img src="assets/rooms/habitacion-3/3.webp" alt="Habitación 3 de A Leira" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <div class="room" id="habitacion-4">
+        <button class="room-toggle" type="button" aria-expanded="true" aria-controls="habitacion-4-panel">
+          <img class="room-thumb" src="assets/rooms/habitacion-4/1.webp" alt="" loading="lazy">
+          <span class="room-toggle-name">Habitación 4</span>
+          <i class="ph ph-plus room-toggle-icon" aria-hidden="true"></i>
+        </button>
+        <div class="room-panel" id="habitacion-4-panel">
+          <div class="room-header">
+            <h3>Habitación 4</h3>
+            <div class="room-tags">
+              <span>Cama de matrimonio</span>
+            </div>
+          </div>
+          <div class="room-grid">
+            <img src="assets/rooms/habitacion-4/1.webp" alt="Habitación 4 de A Leira" loading="lazy">
+            <img src="assets/rooms/habitacion-4/2.webp" alt="Habitación 4 de A Leira" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <div class="room" id="bano-1">
+        <button class="room-toggle" type="button" aria-expanded="true" aria-controls="bano-1-panel">
+          <img class="room-thumb" src="assets/rooms/bano-1/1.webp" alt="" loading="lazy">
+          <span class="room-toggle-name">Baño 1</span>
+          <i class="ph ph-plus room-toggle-icon" aria-hidden="true"></i>
+        </button>
+        <div class="room-panel" id="bano-1-panel">
+          <div class="room-header">
+            <h3>Baño 1</h3>
+            <div class="room-tags">
+              <span>Ducha</span>
+            </div>
+          </div>
+          <div class="room-grid">
+            <img src="assets/rooms/bano-1/1.webp" alt="Baño 1 de A Leira" loading="lazy">
+            <img src="assets/rooms/bano-1/2.webp" alt="Baño 1 de A Leira" loading="lazy">
+            <img src="assets/rooms/bano-1/3.webp" alt="Baño 1 de A Leira" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <div class="room" id="bano-2">
+        <button class="room-toggle" type="button" aria-expanded="true" aria-controls="bano-2-panel">
+          <img class="room-thumb" src="assets/rooms/bano-2/1.webp" alt="" loading="lazy">
+          <span class="room-toggle-name">Baño 2</span>
+          <i class="ph ph-plus room-toggle-icon" aria-hidden="true"></i>
+        </button>
+        <div class="room-panel" id="bano-2-panel">
+          <div class="room-header">
+            <h3>Baño 2</h3>
+            <div class="room-tags">
+              <span>Aseo</span>
+            </div>
+          </div>
+          <div class="room-grid">
+            <img src="assets/rooms/bano-2/1.webp" alt="Baño 2 de A Leira" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <div class="room" id="bano-3">
+        <button class="room-toggle" type="button" aria-expanded="true" aria-controls="bano-3-panel">
+          <img class="room-thumb" src="assets/rooms/bano-3/1.webp" alt="" loading="lazy">
+          <span class="room-toggle-name">Baño 3</span>
+          <i class="ph ph-plus room-toggle-icon" aria-hidden="true"></i>
+        </button>
+        <div class="room-panel" id="bano-3-panel">
+          <div class="room-header">
+            <h3>Baño 3</h3>
+            <div class="room-tags">
+              <span>Ducha</span>
+            </div>
+          </div>
+          <div class="room-grid">
+            <img src="assets/rooms/bano-3/1.webp" alt="Baño 3 de A Leira" loading="lazy">
+            <img src="assets/rooms/bano-3/2.webp" alt="Baño 3 de A Leira" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <div class="room" id="galeria">
+        <button class="room-toggle" type="button" aria-expanded="true" aria-controls="galeria-panel">
+          <img class="room-thumb" src="assets/rooms/galeria/1.webp" alt="" loading="lazy">
+          <span class="room-toggle-name">Galería</span>
+          <i class="ph ph-plus room-toggle-icon" aria-hidden="true"></i>
+        </button>
+        <div class="room-panel" id="galeria-panel">
+          <div class="room-header">
+            <h3>Galería</h3>
+            <div class="room-tags">
+              <span>Mesa comedor</span>
+            </div>
+          </div>
+          <div class="room-grid">
+            <img src="assets/rooms/galeria/1.webp" alt="Galería acristalada de A Leira" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <div class="room" id="jardin">
+        <button class="room-toggle" type="button" aria-expanded="true" aria-controls="jardin-panel">
+          <img class="room-thumb" src="assets/rooms/jardin/1.webp" alt="" loading="lazy">
+          <span class="room-toggle-name">Jardín</span>
+          <i class="ph ph-plus room-toggle-icon" aria-hidden="true"></i>
+        </button>
+        <div class="room-panel" id="jardin-panel">
+          <div class="room-header">
+            <h3>Jardín</h3>
+            <div class="room-tags">
+              <span>Barbacoa</span>
+              <span>Mesa exterior</span>
+            </div>
+          </div>
+          <div class="room-grid">
+            <img src="assets/rooms/jardin/1.webp" alt="Jardín de A Leira" loading="lazy">
+            <img src="assets/rooms/jardin/2.webp" alt="Jardín de A Leira" loading="lazy">
+            <img src="assets/rooms/jardin/3.webp" alt="Jardín de A Leira" loading="lazy">
+            <img src="assets/rooms/jardin/4.webp" alt="Jardín de A Leira" loading="lazy">
+            <img src="assets/rooms/jardin/5.webp" alt="Jardín de A Leira" loading="lazy">
+            <img src="assets/rooms/jardin/6.webp" alt="Jardín de A Leira" loading="lazy">
+            <img src="assets/rooms/jardin/7.webp" alt="Jardín de A Leira" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+      <div class="room" id="piscina">
+        <button class="room-toggle" type="button" aria-expanded="true" aria-controls="piscina-panel">
+          <img class="room-thumb" src="assets/rooms/piscina/1.webp" alt="" loading="lazy">
+          <span class="room-toggle-name">Piscina</span>
+          <i class="ph ph-plus room-toggle-icon" aria-hidden="true"></i>
+        </button>
+        <div class="room-panel" id="piscina-panel">
+          <div class="room-header">
+            <h3>Piscina</h3>
+            <div class="room-tags">
+              <span>Tumbonas</span>
+            </div>
+          </div>
+          <div class="room-grid">
+            <img src="assets/rooms/piscina/1.webp" alt="Piscina de A Leira" loading="lazy">
+            <img src="assets/rooms/piscina/2.webp" alt="Piscina de A Leira" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="services container" id="servicios">
+  <h2 class="section-title">Servicios</h2>
+  <p class="section-intro">Todo lo que encontrarás en la casa, agrupado por categorías.</p>
+
+  <div class="services-columns">
+
+    <div class="services-column">
+
+    <div class="service-group">
+      <h3><button class="service-toggle" type="button" aria-expanded="true"><i class="ph ph-cooking-pot" aria-hidden="true"></i><span>Cocina y comedor</span><i class="ph ph-plus service-toggle-icon" aria-hidden="true"></i></button></h3>
+      <ul>
+        <li>Cocina<span>Zona donde los viajeros pueden cocinar</span></li>
+        <li>Nevera</li>
+        <li>Congelador</li>
+        <li>Fogones</li>
+        <li>Horno</li>
+        <li>Microondas</li>
+        <li>Lavavajillas</li>
+        <li>Hervidor de agua</li>
+        <li>Cafetera italiana</li>
+        <li>Tostadora</li>
+        <li>Utensilios básicos de cocina<span>Cazuelas y sartenes, aceite, sal y pimienta</span></li>
+        <li>Platos y cubiertos<span>Cuencos, palillos, platos, tazas, etc.</span></li>
+        <li>Copas de vino</li>
+        <li>Utensilios de barbacoa<span>Parrilla, carbón, brochetas de bambú o hierro, etc.</span></li>
+        <li>Mesa de comedor</li>
+      </ul>
+    </div>
+
+    <div class="service-group">
+      <h3><button class="service-toggle" type="button" aria-expanded="true"><i class="ph ph-shower" aria-hidden="true"></i><span>Baño</span><i class="ph ph-plus service-toggle-icon" aria-hidden="true"></i></button></h3>
+      <ul>
+        <li>Agua caliente</li>
+        <li>Ducha exterior</li>
+        <li>Secador de pelo</li>
+        <li>Gel de ducha</li>
+        <li>Productos de limpieza</li>
+      </ul>
+    </div>
+
+    </div>
+
+    <div class="services-column">
+
+    <div class="service-group">
+      <h3><button class="service-toggle" type="button" aria-expanded="true"><i class="ph ph-washing-machine" aria-hidden="true"></i><span>Dormitorio y lavandería</span><i class="ph ph-plus service-toggle-icon" aria-hidden="true"></i></button></h3>
+      <ul>
+        <li>Lavadora</li>
+        <li>Ropa de cama</li>
+        <li>Persianas opacas</li>
+        <li>Espacio para guardar la ropa</li>
+        <li>Tendedero para ropa</li>
+      </ul>
+    </div>
+
+    <div class="service-group">
+      <h3><button class="service-toggle" type="button" aria-expanded="true"><i class="ph ph-wifi-high" aria-hidden="true"></i><span>Internet y oficina</span><i class="ph ph-plus service-toggle-icon" aria-hidden="true"></i></button></h3>
+      <ul>
+        <li>Wifi</li>
+        <li>Zona para trabajar</li>
+      </ul>
+    </div>
+
+    <div class="service-group">
+      <h3><button class="service-toggle" type="button" aria-expanded="true"><i class="ph ph-television-simple" aria-hidden="true"></i><span>Ocio</span><i class="ph ph-plus service-toggle-icon" aria-hidden="true"></i></button></h3>
+      <ul>
+        <li>Televisión</li>
+        <li>Conexión Ethernet</li>
+      </ul>
+    </div>
+
+    <div class="service-group">
+      <h3><button class="service-toggle" type="button" aria-expanded="true"><i class="ph ph-tree" aria-hidden="true"></i><span>Exterior</span><i class="ph ph-plus service-toggle-icon" aria-hidden="true"></i></button></h3>
+      <ul>
+        <li>Mobiliario exterior</li>
+        <li>Comedor al aire libre</li>
+        <li>Barbacoa</li>
+      </ul>
+    </div>
+
+    <div class="service-group">
+      <h3><button class="service-toggle" type="button" aria-expanded="true"><i class="ph ph-car" aria-hidden="true"></i><span>Aparcamiento e instalaciones</span><i class="ph ph-plus service-toggle-icon" aria-hidden="true"></i></button></h3>
+      <ul>
+        <li>Aparcamiento gratis in situ</li>
+        <li>Piscina</li>
+      </ul>
+    </div>
+
+    </div>
+
+    <div class="services-column">
+
+    <div class="service-group">
+      <h3><button class="service-toggle" type="button" aria-expanded="true"><i class="ph ph-thermometer-simple" aria-hidden="true"></i><span>Calefacción</span><i class="ph ph-plus service-toggle-icon" aria-hidden="true"></i></button></h3>
+      <ul>
+        <li>Calefacción central por aerotermia</li>
+      </ul>
+    </div>
+
+    <div class="service-group">
+      <h3><button class="service-toggle" type="button" aria-expanded="true"><i class="ph ph-fire-extinguisher" aria-hidden="true"></i><span>Seguridad en el hogar</span><i class="ph ph-plus service-toggle-icon" aria-hidden="true"></i></button></h3>
+      <ul>
+        <li>Extintor de incendios</li>
+        <li>Botiquín</li>
+      </ul>
+    </div>
+
+    <div class="service-group">
+      <h3><button class="service-toggle" type="button" aria-expanded="true"><i class="ph ph-baby" aria-hidden="true"></i><span>Familiares</span><i class="ph ph-plus service-toggle-icon" aria-hidden="true"></i></button></h3>
+      <ul>
+        <li>Cuna<span>Siempre disponible · Estándar (132 × 71 cm)</span></li>
+      </ul>
+    </div>
+
+    <div class="service-group">
+      <h3><button class="service-toggle" type="button" aria-expanded="true"><i class="ph ph-door-open" aria-hidden="true"></i><span>Acceso</span><i class="ph ph-plus service-toggle-icon" aria-hidden="true"></i></button></h3>
+      <ul>
+        <li>Entrada privada</li>
+      </ul>
+    </div>
+
+    <div class="service-group">
+      <h3><button class="service-toggle" type="button" aria-expanded="true"><i class="ph ph-suitcase-simple" aria-hidden="true"></i><span>Servicios</span><i class="ph ph-plus service-toggle-icon" aria-hidden="true"></i></button></h3>
+      <ul>
+        <li>Se permite dejar el equipaje<span>Para quien llegue temprano o se marche después de la hora estipulada</span></li>
+        <li>Disponible para estancias largas<span>Permite estancias de 28 días o más</span></li>
+      </ul>
+    </div>
+
+    <div class="service-group service-group-excluded">
+      <h3><button class="service-toggle" type="button" aria-expanded="true"><i class="ph ph-prohibit" aria-hidden="true"></i><span>No incluye</span><i class="ph ph-plus service-toggle-icon" aria-hidden="true"></i></button></h3>
+      <ul>
+        <li>Aire acondicionado</li>
+        <li>Secadora</li>
+        <li>Detector de humo</li>
+        <li>Cámaras de seguridad en el exterior</li>
+      </ul>
+    </div>
+
+    </div>
+
+  </div>
+</section>
+
+<a href="#" class="floating-cta" id="floatingCta">Reservar <i class="ph ph-arrow-right" aria-hidden="true"></i></a>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Cerrar"><i class="ph ph-x"></i></button>
+  <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Foto anterior"><i class="ph ph-caret-left"></i></button>
+  <figure class="lightbox-figure">
+    <figcaption class="lightbox-caption"><span id="lightboxRoom"></span><span class="lightbox-count" id="lightboxCount"></span></figcaption>
+    <img id="lightboxImg" src="" alt="">
+  </figure>
+  <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Foto siguiente"><i class="ph ph-caret-right"></i></button>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>
