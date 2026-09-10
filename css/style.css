@@ -230,33 +230,23 @@ h1, h2, h3, h4 {
   position: absolute;
   inset: 0;
   z-index: -2;
-  overflow: hidden;
   touch-action: pan-y;
+}
+
+/* Ni el carrusel ni el hero recortan: las laterales giradas salen fuera y
+   el contenedor deja de leerse como una caja. */
+.hero.has-carousel {
+  overflow: visible;
 }
 
 .hero.has-carousel > img {
   display: none;
 }
 
-/* El velo y el texto cubren todo el hero: sin esto se comen el gesto
-   de deslizar antes de que llegue al carrusel. */
-.hero.has-carousel::after,
+/* El texto cubre todo el hero: sin esto se come el gesto de deslizar
+   antes de que llegue al carrusel. */
 .hero.has-carousel .hero-content {
   pointer-events: none;
-}
-
-/* Velo bajo el texto: las fotos van cambiando y algunas son muy claras. */
-.hero.has-carousel::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: linear-gradient(
-    to top,
-    rgba(20, 17, 12, 0.72) 0%,
-    rgba(20, 17, 12, 0.32) 34%,
-    rgba(20, 17, 12, 0) 62%
-  );
 }
 
 .hero-slide {
@@ -264,9 +254,11 @@ h1, h2, h3, h4 {
   top: 0;
   bottom: 0;
   left: 50%;
-  width: 72%;
+  width: 62%;
   border-radius: var(--radius-md);
   overflow: hidden;
+  /* Sin sombra, dos fotos solapadas se leen como una sola mancha. */
+  box-shadow: 0 12px 32px rgba(20, 17, 12, 0.32);
   transition: transform 0.7s var(--ease-bounce), opacity 0.7s var(--ease);
   will-change: transform;
 }
@@ -938,6 +930,12 @@ h1, h2, h3, h4 {
 
   .logo img {
     height: 22px;
+  }
+
+  /* Las fotos laterales salen del hero: se recortan en el borde de la
+     pantalla. clip en vez de hidden para no romper el header sticky. */
+  body {
+    overflow-x: clip;
   }
 
   /* min-height en vez de height: si el titular ocupa más líneas la foto

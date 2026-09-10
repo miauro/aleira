@@ -45,16 +45,21 @@ const buildCarousel = () => {
   let active = 0;
   let timer = null;
 
+  // Las laterales se solapan bajo la central (menos del 100% de su ancho)
+  // y giran, como fotos encaradas en un carrete circular.
+  const STEP = 42; // % del ancho de cada foto
+  const ANGLE = 8; // grados por posición
+
   const layout = () => {
     slides.forEach((slide, i) => {
       let offset = i - active;
       if (offset > n / 2) offset -= n;
       if (offset < -n / 2) offset += n;
 
-      const near = Math.abs(offset) <= 1;
+      const scale = offset === 0 ? 1 : 0.82;
       slide.style.transform =
-        `translateX(calc(-50% + ${offset} * (100% + 12px))) scale(${offset === 0 ? 1 : 0.88})`;
-      slide.style.opacity = near ? (offset === 0 ? 1 : 0.85) : 0;
+        `translateX(calc(-50% + ${offset} * ${STEP}%)) rotate(${offset * ANGLE}deg) scale(${scale})`;
+      slide.style.opacity = Math.abs(offset) <= 1 ? 1 : 0;
       slide.style.zIndex = String(3 - Math.abs(offset));
     });
   };
