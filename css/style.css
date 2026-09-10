@@ -203,8 +203,23 @@ h1, h2, h3, h4 {
 
 /* ---------- Hero ---------- */
 
+/* A ancho completo (el contenedor va por dentro) para que las fotos
+   laterales se recorten en el borde de la pantalla y no antes.
+   Se recorta aquí y no en el body: overflow en el body lo convierte en
+   bloque contenedor de los position:fixed y el menú a pantalla completa
+   se dimensionaría contra el ancho desbordado. */
 .hero-section {
   padding-top: 28px;
+  overflow: hidden;
+}
+
+/* Donde se soporte, solo se recorta en horizontal: así las esquinas
+   giradas pueden asomar por arriba y por abajo. */
+@supports (overflow: clip) {
+  .hero-section {
+    overflow-x: clip;
+    overflow-y: visible;
+  }
 }
 
 .hero {
@@ -224,9 +239,12 @@ h1, h2, h3, h4 {
   z-index: -2;
 }
 
-/* Carrusel de portada. Solo existe en móvil y solo si hay JS: sin él se
-   queda la foto estática, por eso la clase has-carousel la pone el script. */
+/* Carrusel de portada. Solo existe si hay JS: sin él se queda la foto
+   estática, por eso la clase has-carousel la pone el script. */
 .hero-carousel {
+  /* En desktop las fotos son muy apaisadas: con el mismo ángulo que en
+     móvil el giro las hace asomar muy por encima de la central. */
+  --hero-angle: 3deg;
   position: absolute;
   inset: 0;
   z-index: -2;
@@ -254,6 +272,8 @@ h1, h2, h3, h4 {
   top: 0;
   bottom: 0;
   left: 50%;
+  /* La central ocupa el ancho del contenedor, igual que el resto de la
+     página; las laterales se salen por los bordes de la pantalla. */
   width: 100%;
   border-radius: var(--radius-md);
   overflow: hidden;
@@ -291,7 +311,7 @@ h1, h2, h3, h4 {
 
 .hero-meta {
   display: grid;
-  grid-template-columns: repeat(2, auto);
+  grid-template-columns: repeat(4, auto);
   gap: 12px;
 }
 
@@ -335,43 +355,6 @@ h1, h2, h3, h4 {
   font-size: 1.05rem;
   line-height: 1.75;
   color: var(--color-text);
-}
-
-.discover-lead {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 56px;
-  margin-bottom: 56px;
-}
-
-.discover-lead .discover-intro {
-  margin-bottom: 0;
-}
-
-/* Los datos se ceden antes que el párrafo si falta sitio. */
-.discover-meta {
-  flex-shrink: 0;
-}
-
-.discover-meta .hero-meta {
-  display: flex;
-  gap: 10px;
-}
-
-/* Fuera de la foto, el blanco translúcido sería invisible sobre el crema. */
-.discover-meta .hero-meta div {
-  background: var(--color-tag-bg);
-  backdrop-filter: none;
-  color: var(--color-text);
-  font-size: 1rem;
-  font-weight: 500;
-  padding: 11px 16px;
-}
-
-.discover-meta .hero-meta i {
-  font-size: 1.15rem;
-  color: var(--color-text-soft);
 }
 
 .discover-layout {
@@ -932,11 +915,6 @@ h1, h2, h3, h4 {
     height: 22px;
   }
 
-  /* Las fotos laterales salen del hero: se recortan en el borde de la
-     pantalla. clip en vez de hidden para no romper el header sticky. */
-  body {
-    overflow-x: clip;
-  }
 
   /* min-height en vez de height: si el titular ocupa más líneas la foto
      crece en lugar de desbordar el texto por arriba, bajo el header. */
@@ -958,12 +936,17 @@ h1, h2, h3, h4 {
     right: 12px;
   }
 
+  .hero-carousel {
+    --hero-angle: 8deg;
+  }
+
+  /* Titular arriba y datos abajo: space-between los separa a los extremos. */
   .hero-content {
     height: auto;
     min-height: 460px;
     align-items: stretch;
     padding: 28px 20px;
-    justify-content: flex-end;
+    justify-content: space-between;
     gap: 20px;
   }
 
@@ -971,6 +954,7 @@ h1, h2, h3, h4 {
     text-align: left;
     max-width: none;
   }
+
 
   /* 2×2: apilados en una columna sumaban 206px y no cabían. */
   .hero-meta {

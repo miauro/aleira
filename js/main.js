@@ -1,6 +1,6 @@
 const mobile = window.matchMedia("(max-width: 720px)");
 
-// Carrusel de portada (solo móvil). Cada diapositiva se coloca por su
+// Carrusel de portada. Cada diapositiva se coloca por su
 // distancia a la activa en vez de mover una tira: así el salto de la última
 // a la primera ocurre fuera de pantalla y el bucle no da tirones.
 const HERO_PHOTOS = [
@@ -48,7 +48,6 @@ const buildCarousel = () => {
   // Las laterales se solapan bajo la central (menos del 100% de su ancho)
   // y giran, como fotos encaradas en un carrete circular.
   const STEP = 42; // % del ancho de cada foto
-  const ANGLE = 8; // grados por posición
 
   const layout = () => {
     slides.forEach((slide, i) => {
@@ -57,8 +56,10 @@ const buildCarousel = () => {
       if (offset < -n / 2) offset += n;
 
       const scale = offset === 0 ? 1 : 0.82;
+      // El ángulo sale de --hero-angle, así lo decide la media query y
+      // cambia solo al redimensionar sin recalcular nada aquí.
       slide.style.transform =
-        `translateX(calc(-50% + ${offset} * ${STEP}%)) rotate(${offset * ANGLE}deg) scale(${scale})`;
+        `translateX(calc(-50% + ${offset} * ${STEP}%)) rotate(calc(${offset} * var(--hero-angle))) scale(${scale})`;
       slide.style.opacity = Math.abs(offset) <= 1 ? 1 : 0;
       slide.style.zIndex = String(3 - Math.abs(offset));
     });
@@ -107,35 +108,7 @@ const buildCarousel = () => {
   carousel = { container, start, stop };
 };
 
-const destroyCarousel = () => {
-  if (!carousel) return;
-  carousel.stop();
-  carousel.container.remove();
-  heroEl.classList.remove("has-carousel");
-  carousel = null;
-};
-
-const syncCarousel = () => (mobile.matches ? buildCarousel() : destroyCarousel());
-
-syncCarousel();
-mobile.addEventListener("change", syncCarousel);
-
-// Los datos del alojamiento viven en la portada en móvil y junto al párrafo
-// de "Descubre la casa" en desktop. Se mueve el mismo nodo en vez de
-// duplicar el markup, para no tener dos textos que mantener en sincronía.
-const heroMeta = document.querySelector(".hero-meta");
-const heroContent = document.querySelector(".hero-content");
-const discoverMeta = document.getElementById("discoverMeta");
-
-if (heroMeta && discoverMeta) {
-  const placeMeta = () => {
-    const target = mobile.matches ? heroContent : discoverMeta;
-    if (heroMeta.parentNode !== target) target.appendChild(heroMeta);
-  };
-
-  placeMeta();
-  mobile.addEventListener("change", placeMeta);
-}
+buildCarousel();
 
 // Menú móvil a pantalla completa
 const navToggle = document.getElementById("navToggle");
@@ -196,6 +169,28 @@ if (discoverNav && rooms.length) {
   setActive(rooms[0].id);
 }
 
+// Al cerrarse un panel que está más arriba, todo lo de debajo sube y lo que
+// acabas de abrir se sale de pantalla. Se ancla la fila pulsada a su posición
+// corrigiendo el scroll en cada fotograma mientras dura el plegado.
+const keepAnchored = (el, mutate) => {
+  const before = el.getBoundingClientRect().top;
+  mutate();
+
+  const root = document.documentElement;
+  const previous = root.style.scrollBehavior;
+  root.style.scrollBehavior = "auto"; // el scroll suave global pelearía con esto
+
+  const until = performance.now() + 450; // la transición dura 380 ms
+  const tick = (now) => {
+    const delta = el.getBoundingClientRect().top - before;
+    if (Math.abs(delta) > 0.5) window.scrollBy(0, delta);
+    if (now < until) requestAnimationFrame(tick);
+    else root.style.scrollBehavior = previous;
+  };
+
+  requestAnimationFrame(tick);
+};
+
 // Acordeones (espacios y servicios): uno abierto a la vez, todos cerrados al entrar
 const accordions = [
   {
@@ -218,11 +213,10 @@ accordions.forEach(({ items, button }) => {
     button(item).addEventListener("click", () => {
       if (!mobile.matches) return;
       const willOpen = !item.hasAttribute("data-open");
-      items.forEach((other) => setOpen(other, false));
-      setOpen(item, willOpen);
-      if (willOpen) {
-        item.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
+      keepAnchored(button(item), () => {
+        items.forEach((other) => setOpen(other, false));
+        setOpen(item, willOpen);
+      });
     });
   });
 
