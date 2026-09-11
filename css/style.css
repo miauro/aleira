@@ -52,6 +52,7 @@ html {
 
 body {
   margin: 0;
+  transition: opacity 0.2s var(--ease);
   font-family: var(--font-body);
   color: var(--color-text);
   background: var(--color-bg);
@@ -300,13 +301,13 @@ h1, h2, h3, h4 {
 }
 
 .hero-content h1 {
-  color: #fff;
+  color: #ffffff;
   text-align: center;
   font-size: clamp(2.2rem, 3.6vw, 3rem);
   font-weight: 800;
   letter-spacing: -0.01em;
   max-width: 480px;
-  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.45);
+  text-shadow: 0 2px 10px var(--color-dark);
 }
 
 .hero-meta {
@@ -319,9 +320,9 @@ h1, h2, h3, h4 {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(255, 255, 255, 0.3);
-  backdrop-filter: blur(4px);
-  color: #fff;
+  background: var(--color-bg);
+  backdrop-filter: blur(8px);
+  color: var(--color-text);
   font-size: 0.88rem;
   font-weight: 600;
   padding: 10px 16px;
@@ -331,7 +332,7 @@ h1, h2, h3, h4 {
 
 .hero-meta i {
   font-size: 1rem;
-  color: #fff;
+  color: var(--color-text);
 }
 
 /* ---------- Descubre la casa ---------- */
@@ -548,11 +549,15 @@ h1, h2, h3, h4 {
 
 .service-group-excluded li {
   color: var(--color-text-soft);
-  text-decoration: line-through;
-  text-decoration-thickness: 1px;
 }
 
 /* ---------- Animación ---------- */
+
+/* El cambio de idioma reescribe el texto en sitio: sin un fundido de por
+   medio el salto pasa desapercibido. */
+body.lang-switching {
+  opacity: 0.25;
+}
 
 /* La clase js la pone un script en el <head>: sin JS nada se oculta. */
 .js .reveal {
@@ -833,9 +838,15 @@ h1, h2, h3, h4 {
     justify-content: space-between;
   }
 
-  .nav-cta {
+  /* El menú desplegado es hermano de estos dentro del header, así que hay
+     que levantarlos por encima de su z-index para que no los tape. */
+  .nav-cta,
+  .logo {
     position: relative;
     z-index: 101;
+  }
+
+  .nav-cta {
     gap: 6px;
   }
 
@@ -997,12 +1008,12 @@ h1, h2, h3, h4 {
   /* 0fr -> 1fr permite transicionar una altura automática, cosa que
      display:none o height:auto no admiten. Especificidad .js .room para
      ganar a .js .reveal, que si no pisaría este transition. */
+  /* La altura cambia de golpe a propósito: animarla mientras se corrige
+     el scroll producía tirones. El contenido entra con un fundido. */
   .js .room {
     display: grid;
     grid-template-rows: auto 0fr;
-    transition: grid-template-rows 0.38s var(--ease),
-                opacity 0.5s var(--ease),
-                transform 0.5s var(--ease);
+    transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
   }
 
   .js .room[data-open] {
@@ -1060,12 +1071,14 @@ h1, h2, h3, h4 {
   .room-panel {
     overflow: hidden;
     visibility: hidden;
-    transition: visibility 0s 0.38s;
+    opacity: 0;
+    transition: visibility 0s 0.2s, opacity 0.2s var(--ease);
   }
 
   .room[data-open] .room-panel {
     visibility: visible;
-    transition-delay: 0s;
+    opacity: 1;
+    transition: visibility 0s, opacity 0.3s var(--ease) 0.05s;
   }
 
   /* El padding va dentro: en la fila a 0fr no debe ocupar alto. */
@@ -1112,9 +1125,7 @@ h1, h2, h3, h4 {
   .js .service-group {
     display: grid;
     grid-template-rows: auto 0fr;
-    transition: grid-template-rows 0.38s var(--ease),
-                opacity 0.5s var(--ease),
-                transform 0.5s var(--ease);
+    transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
   }
 
   .js .service-group[data-open] {
@@ -1132,12 +1143,14 @@ h1, h2, h3, h4 {
   .service-group ul {
     overflow: hidden;
     visibility: hidden;
-    transition: visibility 0s 0.38s;
+    opacity: 0;
+    transition: visibility 0s 0.2s, opacity 0.2s var(--ease);
   }
 
   .service-group[data-open] ul {
     visibility: visible;
-    transition-delay: 0s;
+    opacity: 1;
+    transition: visibility 0s, opacity 0.3s var(--ease) 0.05s;
   }
 
   /* --- CTA flotante --- */

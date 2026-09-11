@@ -170,25 +170,21 @@ if (discoverNav && rooms.length) {
 }
 
 // Al cerrarse un panel que está más arriba, todo lo de debajo sube y lo que
-// acabas de abrir se sale de pantalla. Se ancla la fila pulsada a su posición
-// corrigiendo el scroll en cada fotograma mientras dura el plegado.
+// acabas de abrir se sale de pantalla. Se ancla la fila pulsada a su posición.
 const keepAnchored = (el, mutate) => {
   const before = el.getBoundingClientRect().top;
   mutate();
 
+  // La altura del panel cambia de golpe, así que basta una corrección:
+  // corregir fotograma a fotograma mientras se animaba daba tirones.
+  const delta = el.getBoundingClientRect().top - before;
+  if (!delta) return;
+
   const root = document.documentElement;
   const previous = root.style.scrollBehavior;
-  root.style.scrollBehavior = "auto"; // el scroll suave global pelearía con esto
-
-  const until = performance.now() + 450; // la transición dura 380 ms
-  const tick = (now) => {
-    const delta = el.getBoundingClientRect().top - before;
-    if (Math.abs(delta) > 0.5) window.scrollBy(0, delta);
-    if (now < until) requestAnimationFrame(tick);
-    else root.style.scrollBehavior = previous;
-  };
-
-  requestAnimationFrame(tick);
+  root.style.scrollBehavior = "auto"; // el scroll suave global lo animaría
+  window.scrollBy(0, delta);
+  root.style.scrollBehavior = previous;
 };
 
 // Acordeones (espacios y servicios): uno abierto a la vez, todos cerrados al entrar
@@ -378,7 +374,7 @@ if (langToggle && typeof TRANSLATIONS !== "undefined") {
     return value;
   };
 
-  const setLanguage = (lang) => {
+  const applyLanguage = (lang) => {
     const en = lang === "en";
     texts.forEach(({ node, es, prefix, suffix }) => {
       node.nodeValue = prefix + (en ? TRANSLATIONS[es] : es) + suffix;
@@ -403,7 +399,20 @@ if (langToggle && typeof TRANSLATIONS !== "undefined") {
     langToggle.dataset.lang = lang;
   };
 
-  setLanguage(navigator.language.toLowerCase().startsWith("es") ? "es" : "en");
+  // El texto se reescribe en sitio: sin un fundido el cambio no se percibe.
+  const setLanguage = (lang) => {
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      applyLanguage(lang);
+      return;
+    }
+    document.body.classList.add("lang-switching");
+    setTimeout(() => {
+      applyLanguage(lang);
+      document.body.classList.remove("lang-switching");
+    }, 200);
+  };
+
+  applyLanguage(navigator.language.toLowerCase().startsWith("es") ? "es" : "en");
 
   langToggle.addEventListener("click", () => {
     setLanguage(langToggle.dataset.lang === "es" ? "en" : "es");

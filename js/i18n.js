@@ -9,7 +9,7 @@ const TRANSLATIONS = {
   "Reservar": "Book",
 
   // Portada
-  "Alojamiento completo en Becerril de la Sierra": "Entire home in Becerril de la Sierra",
+  "Casa rural en la Sierra de Madrid": "Country house in the Sierra de Madrid",
   "10 viajeros": "10 guests",
   "4 dormitorios": "4 bedrooms",
   "7 camas": "7 beds",
@@ -35,6 +35,7 @@ const TRANSLATIONS = {
   "Galería": "Sunroom",
   "Jardín": "Garden",
   "Piscina": "Pool",
+  "Abierta de junio a septiembre": "Open June to September",
 
   // Etiquetas de los espacios
   "Televisión": "TV",
